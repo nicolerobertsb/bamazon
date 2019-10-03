@@ -84,6 +84,6 @@ function addToInventory(inventoryToAdd) {
         },{
             item_id: managerAddInventory.inputID
         }]);
-        displayManagerOptions();
+        displayProduct();
     });
 }
