@@ -67,23 +67,27 @@ function viewLowInventory(productsLowInventory) {
 
 }
 
+
 function addToInventory(inventoryToAdd) {
     inquirer.prompt([{
             type: "input",
             name: "inputID",
-            message: "Please enter the ID of the item you'd like to add inventory to"
+            message: "Please enter the ID of the item you'd like to add inventory to",
+            filter: Number
         },
         {
             type: "input",
             name: "inventoryAmount",
-            message: "Please enter the amount of inventory you'd like to add"
+            message: "Please enter the amount of inventory you'd like to add",
+            filter: Number
         }
-    ]).then(function(managerAddInventory){
-        connection.query("UPDATE products SET ? WHERE ?",[{
-            stock_quantity: managerAddInventory.inventoryAmount
-        },{
-            item_id: managerAddInventory.inputID
-        }]);
+
+    ]).then(function (managerAddInventory) {
+        connection.query("UPDATE products SET stock_quantity = stock_quantity + ? WHERE item_id = ?",
+            [
+                managerAddInventory.inventoryAmount,
+                managerAddInventory.inputID
+            ]);
         displayProduct();
     });
 }

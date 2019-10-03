@@ -25,6 +25,7 @@ function displayProduct(){
 
     })
 }
+
 // as the user what ID of the product they want to buy & how many units 
 function prompt(inventory){
     inquirer.prompt([
@@ -37,7 +38,6 @@ function prompt(inventory){
     
     ]).then(function(answers){
         var idRequested = answers.ID;
-        //var quantityRequested = answers.Quantity;
         var product = validateId(idRequested, inventory);
         if(product){
             promptForQuantity(product);
@@ -49,6 +49,8 @@ function prompt(inventory){
 
     })
 }
+
+
 function validateId(id, inventory){
     for(var i=0; i<inventory.length; i++){
         if(inventory[i].item_id === id){
@@ -58,6 +60,8 @@ function validateId(id, inventory){
     }
     return null;
 }
+
+
 function promptForQuantity(product){
     inquirer.prompt([
         
@@ -67,6 +71,7 @@ function promptForQuantity(product){
             message:"How many units would you like to purchase?",
             filter: Number
         }
+        
     ]).then(function(answers){
         
         var quantityRequested = answers.Quantity;
@@ -81,6 +86,8 @@ function promptForQuantity(product){
 
     })
 }
+
+
 function makePurchase(purchasedProduct, quantityRequested){
     connection.query("UPDATE products SET stock_quantity = stock_quantity - ? WHERE item_id = ?",[quantityRequested, purchasedProduct.item_id], function(err, res){
         console.log("\nYour purchase of " + quantityRequested + " " + purchasedProduct.product_name + " was successful!" + "\nThe total cost of your purchase is " + quantityRequested * purchasedProduct.price + "\n")
