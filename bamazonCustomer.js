@@ -3,7 +3,6 @@
 var mysql = require ("mysql");
 var inquirer = require ("inquirer");
 require("console.table");
-//var product = "car";
 
 var connection = mysql.createConnection({
     host: "localhost",
